@@ -23,6 +23,21 @@ class Ship {
     }
     pos.add(vel);
     heading += turn;
+    wrap();
+  }
+  
+  void wrap() {
+    if (pos.x - r > width) {
+      pos.x = 0;
+    } else if (pos.x + r < 0) {
+      pos.x = width;
+    }
+    
+    if (pos.y - r > height) {
+      pos.y = 0;
+    } else if (pos.y + r < 0) {
+      pos.y = height;
+    }
   }
 
   void setTurn(float angle) {
