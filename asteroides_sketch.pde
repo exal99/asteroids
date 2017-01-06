@@ -1,5 +1,5 @@
 Ship ship;
-Asteroid[] asteroids;
+ArrayList<Asteroid> asteroids;
 
 int numAsteroids = 10;
 
@@ -7,21 +7,24 @@ void setup() {
   //size(800, 600);
   fullScreen();
   ship = new Ship();
-  asteroids = new Asteroid[numAsteroids];
-  for (int i = 0; i < asteroids.length; i++) {
-    asteroids[i] = new Asteroid();
+  asteroids = new ArrayList<Asteroid>();
+  for (int i = 0; i < numAsteroids; i++) {
+    asteroids.add(new Asteroid());
   }
 }
 
 
 void draw () {
   background(0);
-  ship.render();
-  ship.update();
+
   for (Asteroid a : asteroids) {
     a.update();
     a.render();
   }
+  ship.render();
+  ship.update();
+  textSize(32);
+  text(frameRate, 0, 32);
 }
 
 void keyPressed() {
@@ -32,6 +35,10 @@ void keyPressed() {
   }
   if (keyCode == UP) {
     ship.setThrusting(true);
+  }
+  
+  if (key == ' ') {
+    ship.fire();
   }
 }
 

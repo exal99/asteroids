@@ -5,6 +5,7 @@ class Ship {
   float r;
   boolean thrusting;
   float turn;
+  ArrayList<Laser> lasers;
 
   public Ship() {
     pos = new PVector(width/2, height/2);
@@ -13,6 +14,7 @@ class Ship {
     r = 15;
     thrusting = false;
     turn = 0;
+    lasers = new ArrayList<Laser>();
   }
 
   void update() {
@@ -24,6 +26,21 @@ class Ship {
     pos.add(vel);
     heading += turn;
     wrap();
+    for (int i = lasers.size() - 1; i >= 0; i--) {
+      lasers.get(i).update();
+      if (lasers.get(i).isOffScreen()) {
+        lasers.remove(i);
+        continue;
+      }
+      for (int j = asteroids.size() - 1; j >= 0; j--) {
+        if (lasers.get(i).colided(asteroids.get(j))) {
+          Asteroid colided = asteroids.remove(j);
+          asteroids.addAll(colided.split());
+          lasers.remove(i);
+          break;
+        }
+      }
+    }
   }
   
   void wrap() {
@@ -47,6 +64,10 @@ class Ship {
   void setThrusting(boolean thrust) {
     thrusting = thrust;
   }
+  
+  void fire() {
+    lasers.add(new Laser(pos, heading));
+  }
 
   void render() {
     pushMatrix();
@@ -66,5 +87,9 @@ class Ship {
       rect(-(r-offset), r-offset, -0.9*(2*offset - 2*r), 4*offset);
     }
     popMatrix();
+    
+    for (Laser l : lasers) {
+      l.render();
+    }
   }
 }
