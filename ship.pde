@@ -73,6 +73,10 @@ class Ship {
   void fire() {
     lasers.add(new Laser(pos, heading));
   }
+  
+  void hyperSpace() {
+    pos = new PVector(random(0, width), random(0, height));
+  }
 
   void render() {
     if (iFrames % 8 == 0 || iFrames % 8 == 1 || iFrames % 8 == 2 || iFrames % 8 == 3) {

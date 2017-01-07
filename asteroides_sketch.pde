@@ -78,6 +78,10 @@ void keyPressed() {
   if (key == ' ') {
     ship.fire();
   }
+  
+  if (key == 'x') {
+    ship.hyperSpace();
+  }
 }
 
 void keyReleased() {
