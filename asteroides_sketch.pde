@@ -3,6 +3,7 @@ ArrayList<Asteroid> asteroids;
 
 int numAsteroids = 10;
 boolean displayHitboxes = false;
+int hits = 0;
 
 void setup() {
   //size(800, 600);
@@ -21,7 +22,13 @@ void draw () {
   for (Asteroid a : asteroids) {
     a.update();
     a.render();
+    if (ship.checkColition(a)) {
+      hits++;
+    }
   }
+  textSize(32);
+  fill(255);
+  text("HIT " + hits, 0, 64);
   ship.render();
   ship.update();
   textSize(32);
@@ -38,7 +45,7 @@ void keyPressed() {
   if (keyCode == UP) {
     ship.setThrusting(true);
   }
-  
+
   if (key == ' ') {
     ship.fire();
   }
