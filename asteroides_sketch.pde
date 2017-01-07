@@ -82,6 +82,10 @@ void keyPressed() {
   if (key == 'x') {
     ship.hyperSpace();
   }
+  
+  if (key == 'r') {
+    setup();
+  }
 }
 
 void keyReleased() {
