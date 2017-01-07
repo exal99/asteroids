@@ -73,7 +73,7 @@ class Ship {
   void fire() {
     lasers.add(new Laser(pos, heading));
   }
-  
+
   void hyperSpace() {
     pos = new PVector(random(0, width), random(0, height));
   }

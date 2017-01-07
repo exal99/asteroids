@@ -30,7 +30,6 @@ void setup() {
   }
 }
 
-
 void draw () {
   background(0);
   int index = 0;
@@ -85,11 +84,11 @@ void keyPressed() {
   if (key == ' ') {
     ship.fire();
   }
-  
+
   if (keyCode == SHIFT) {
     ship.hyperSpace();
   }
-  
+
   if (key == 'r') {
     setup();
   }

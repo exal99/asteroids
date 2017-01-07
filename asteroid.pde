@@ -30,14 +30,14 @@ class Asteroid {
       float dist = random(r/2, 1.5*r);
       maxDist = (dist > maxDist) ? dist : maxDist;
       sum += dist;
-       float[] cord = {dist * cos(angle), dist * sin(angle)};
+      float[] cord = {dist * cos(angle), dist * sin(angle)};
       vertexes[i] = cord;
     }
     childSize = sum/(2*vertexes.length);
     r = maxDist;
     vel = PVector.random2D();
     vel.mult(log(800/r));
-}
+  }
 
   void render() {
     pushMatrix();
