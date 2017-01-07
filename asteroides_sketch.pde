@@ -1,5 +1,6 @@
 Ship ship;
 ArrayList<Asteroid> asteroids;
+ArrayList<Explotion> explotions;
 
 int numAsteroids = 10;
 boolean displayHitboxes = false;
@@ -10,6 +11,7 @@ void setup() {
   fullScreen();
   ship = new Ship();
   asteroids = new ArrayList<Asteroid>();
+  explotions = new ArrayList<Explotion>();
   for (int i = 0; i < numAsteroids; i++) {
     asteroids.add(new Asteroid());
   }
@@ -34,6 +36,13 @@ void draw () {
   textSize(32);
   fill(255);
   text(frameRate, 0, 32);
+  for (int i = explotions.size() - 1; i >= 0; i--) {
+    explotions.get(i).update();
+    explotions.get(i).render();
+    if (explotions.get(i).isDone()) {
+      explotions.remove(i);
+    }
+  }
 }
 
 void keyPressed() {

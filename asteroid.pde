@@ -4,7 +4,6 @@ import java.util.Arrays;
 class Asteroid {
   PVector vel;
   PVector pos;
-  Explotion expl;
   float[][] vertexes;
   float r;
   float childSize;
@@ -12,14 +11,12 @@ class Asteroid {
   Asteroid() {
     pos = new PVector(random(0, width), random(0, height));
     r = 80;
-    expl = null;
     init();
   }
 
-  Asteroid(PVector pos, float size, Explotion expl) {
+  Asteroid(PVector pos, float size) {
     this.pos = pos.copy();
     r = size;
-    this.expl = expl;
     init();
   }
 
@@ -46,6 +43,8 @@ class Asteroid {
     pushMatrix();
     translate(pos.x, pos.y);
     noFill();
+    stroke(255);
+    strokeWeight(3);
     beginShape();
     for (int i = 0; i < vertexes.length; i++) {
       vertex(vertexes[i][0], vertexes[i][1]);
@@ -56,20 +55,11 @@ class Asteroid {
       ellipse(0, 0, r*2, r*2);
     }
     popMatrix();
-    if (expl != null) {
-      expl.render();
-    }
   }
 
   void update() {
     pos.add(vel);
     wrap();
-    if (expl != null) {
-      expl.update();
-      if (expl.isDone()) {
-        expl = null;
-      }
-    }
   }
 
   void wrap() {
@@ -88,10 +78,11 @@ class Asteroid {
 
   ArrayList<Asteroid> split() {
     ArrayList<Asteroid> toReturn = new ArrayList<Asteroid>();
-    if (childSize > 10) {
-      toReturn.add(new Asteroid(pos, childSize, new Explotion(pos)));
-      toReturn.add(new Asteroid(pos, childSize, null));
+    if (childSize > 20) {
+      toReturn.add(new Asteroid(pos, childSize));
+      toReturn.add(new Asteroid(pos, childSize));
     }
+    explotions.add(new Explotion(pos));
     return toReturn;
   }
 }
