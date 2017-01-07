@@ -22,6 +22,8 @@ class Ship {
       PVector accel = PVector.fromAngle(heading);
       accel.mult(0.1);
       vel.add(accel);
+    } else {
+      vel.mult(0.99);
     }
     pos.add(vel);
     heading += turn;
