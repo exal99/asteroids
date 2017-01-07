@@ -10,7 +10,7 @@ class Asteroid {
 
   Asteroid() {
     pos = new PVector(random(0, width), random(0, height));
-    r = 40;
+    r = 80;
     init();
   }
 
@@ -26,27 +26,32 @@ class Asteroid {
 
     vertexes = new float[floor(random(5, 15))][];
     float maxDist = 0;
-    float minDist = r*1000;
+    float sum = 0;
     for (int i = 0; i < vertexes.length; i++) {
       float angle = TWO_PI/vertexes.length * i;
-      float dist = random(r/3, r * 2);
+      float dist = random(r/2, r);
       maxDist = (dist > maxDist) ? dist : maxDist;
-      minDist = (dist < minDist) ? dist : minDist;
+      sum += dist;
       float[] cord = {dist * cos(angle), dist * sin(angle)};
       vertexes[i] = cord;
     }
-    childSize = (maxDist + minDist) / 4;
+    childSize = sum/(2*vertexes.length);
     r = maxDist;
   }
 
   void render() {
     pushMatrix();
     translate(pos.x, pos.y);
+    noFill();
     beginShape();
     for (int i = 0; i < vertexes.length; i++) {
       vertex(vertexes[i][0], vertexes[i][1]);
     }
     endShape(CLOSE);
+    if (displayHitboxes) {
+      fill(255, 255, 255, 50);
+      ellipse(0, 0, r*2, r*2);
+    }
     popMatrix();
   }
 

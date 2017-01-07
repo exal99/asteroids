@@ -2,6 +2,7 @@ Ship ship;
 ArrayList<Asteroid> asteroids;
 
 int numAsteroids = 10;
+boolean displayHitboxes = false;
 
 void setup() {
   //size(800, 600);
@@ -24,6 +25,7 @@ void draw () {
   ship.render();
   ship.update();
   textSize(32);
+  fill(255);
   text(frameRate, 0, 32);
 }
 
