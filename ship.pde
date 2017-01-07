@@ -6,6 +6,7 @@ class Ship {
   boolean thrusting;
   float turn;
   ArrayList<Laser> lasers;
+  int iFrames;
 
   public Ship() {
     pos = new PVector(width/2, height/2);
@@ -15,6 +16,7 @@ class Ship {
     thrusting = false;
     turn = 0;
     lasers = new ArrayList<Laser>();
+    iFrames = 0;
   }
 
   void update() {
@@ -43,6 +45,7 @@ class Ship {
         }
       }
     }
+    iFrames = (iFrames > 0) ? iFrames - 1 : 0;
   }
 
   void wrap() {
@@ -72,23 +75,25 @@ class Ship {
   }
 
   void render() {
-    pushMatrix();
-    translate(pos.x, pos.y);
-    rotate(heading + PI / 2);
-    noFill();
-    stroke(255);
-    strokeWeight(1);
-    beginShape();
-    vertex(-r, r);
-    vertex(0, -1.5*r);
-    vertex(r, r);
-    endShape();
-    float offset = 0.2 * r;
-    line(-(r-offset), r-offset, r-offset, r-offset);
-    if (thrusting) {
-      triangle(-(r-offset), r-offset, -(r-offset) + (-0.9*(2*offset - 2*r)), (r-offset), 0, r*2);
+    if (iFrames % 8 == 0 || iFrames % 8 == 1 || iFrames % 8 == 2 || iFrames % 8 == 3) {
+      pushMatrix();
+      translate(pos.x, pos.y);
+      rotate(heading + PI / 2);
+      noFill();
+      stroke(255);
+      strokeWeight(1);
+      beginShape();
+      vertex(-r, r);
+      vertex(0, -1.5*r);
+      vertex(r, r);
+      endShape();
+      float offset = 0.2 * r;
+      line(-(r-offset), r-offset, r-offset, r-offset);
+      if (thrusting) {
+        triangle(-(r-offset), r-offset, -(r-offset) + (-0.9*(2*offset - 2*r)), (r-offset), 0, r*2);
+      }
+      popMatrix();
     }
-    popMatrix();
     if (displayHitboxes) {
       for (PVector[] line : getLines()) {
         line(line[0].x, line[0].y, line[1].x, line[1].y);
@@ -118,7 +123,7 @@ class Ship {
   }
 
   boolean checkColition(Asteroid a) {
-    if (dist(a.pos.x, a.pos.y, pos.x, pos.y) < a.r + 2*r) {
+    if (dist(a.pos.x, a.pos.y, pos.x, pos.y) < a.r + 2*r && iFrames == 0) {
       for (PVector[] line : getLines()) {
         for (int i = 0; i < a.vertexes.length; i++) {
           float[] start = a.vertexes[i];

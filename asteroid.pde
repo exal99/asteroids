@@ -77,6 +77,20 @@ class Asteroid {
   }
 
   ArrayList<Asteroid> split() {
+    int livesBefore = score / 10000;
+    if (r >= 100) {
+      //large
+      score += 20;
+    } else if (r >= 50) {
+      //medium
+      score += 50;
+    } else {
+      //small
+      score += 100;
+    }
+    if ((int) (score / 10000) > livesBefore) {
+      increesLives();
+    }
     ArrayList<Asteroid> toReturn = new ArrayList<Asteroid>();
     if (childSize > 15) {
       toReturn.add(new Asteroid(pos, childSize));
