@@ -2,10 +2,10 @@ Ship ship;
 ArrayList<Asteroid> asteroids;
 ArrayList<Explotion> explotions;
 
-int numAsteroids = 10;
+int numAsteroids = 7;
 boolean displayHitboxes = false;
-int hits = 0;
 int score;
+int level;
 
 ArrayList<Ship> lives;
 float livesPadding = 10;
@@ -23,6 +23,7 @@ void setup() {
     asteroids.add(new Asteroid());
   }
   score = 0;
+  level = 1;
   lives = new ArrayList<Ship>();
   for (int i = 0; i < 3; i++) {
     increesLives();
@@ -32,14 +33,20 @@ void setup() {
 
 void draw () {
   background(0);
+  int index = 0;
   for (Asteroid a : asteroids) {
     a.update();
     a.render();
     if (ship.checkColition(a)) {
-      hits++;
       respawn();
+      asteroids.addAll(a.split());
+      asteroids.remove(index);
+      break;
     }
+    index++;
   }
+  if (asteroids.size() == 0)
+    nextLevel();
   textSize(40);
   fill(255);
   textAlign(CENTER, TOP);
@@ -79,7 +86,7 @@ void keyPressed() {
     ship.fire();
   }
   
-  if (key == 'x') {
+  if (keyCode == SHIFT) {
     ship.hyperSpace();
   }
   
@@ -123,4 +130,11 @@ void respawn() {
     s.iFrames = iFrames;
     ship = s;
   }
+}
+
+void nextLevel() {
+  for (int i = 0; i < numAsteroids + level; i++) {
+    asteroids.add(new Asteroid());
+  }
+  level++;
 }
