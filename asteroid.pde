@@ -21,22 +21,22 @@ class Asteroid {
   }
 
   void init() {
-    vel = PVector.random2D();
-    vel.mult(random(1.5, 3));
 
     vertexes = new float[floor(random(5, 15))][];
     float maxDist = 0;
     float sum = 0;
     for (int i = 0; i < vertexes.length; i++) {
       float angle = TWO_PI/vertexes.length * i;
-      float dist = random(r/2, r);
+      float dist = random(r/2, 1.5*r);
       maxDist = (dist > maxDist) ? dist : maxDist;
       sum += dist;
-      float[] cord = {dist * cos(angle), dist * sin(angle)};
+       float[] cord = {dist * cos(angle), dist * sin(angle)};
       vertexes[i] = cord;
     }
     childSize = sum/(2*vertexes.length);
     r = maxDist;
+    vel = PVector.random2D();
+    vel.mult(log(800/r));
 }
 
   void render() {
@@ -44,7 +44,7 @@ class Asteroid {
     translate(pos.x, pos.y);
     noFill();
     stroke(255);
-    strokeWeight(3);
+    strokeWeight(1);
     beginShape();
     for (int i = 0; i < vertexes.length; i++) {
       vertex(vertexes[i][0], vertexes[i][1]);
@@ -78,7 +78,7 @@ class Asteroid {
 
   ArrayList<Asteroid> split() {
     ArrayList<Asteroid> toReturn = new ArrayList<Asteroid>();
-    if (childSize > 20) {
+    if (childSize > 15) {
       toReturn.add(new Asteroid(pos, childSize));
       toReturn.add(new Asteroid(pos, childSize));
     }

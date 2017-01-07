@@ -11,7 +11,7 @@ class Ship {
     pos = new PVector(width/2, height/2);
     vel = new PVector(0, 0);
     heading = random(0, TWO_PI);
-    r = 15;
+    r = 20;
     thrusting = false;
     turn = 0;
     lasers = new ArrayList<Laser>();
@@ -77,7 +77,7 @@ class Ship {
     rotate(heading + PI / 2);
     noFill();
     stroke(255);
-    strokeWeight(3);
+    strokeWeight(1);
     beginShape();
     vertex(-r, r);
     vertex(0, -1.5*r);
@@ -86,7 +86,7 @@ class Ship {
     float offset = 0.2 * r;
     line(-(r-offset), r-offset, r-offset, r-offset);
     if (thrusting) {
-      rect(-(r-offset), r-offset, -0.9*(2*offset - 2*r), 4*offset);
+      triangle(-(r-offset), r-offset, -(r-offset) + (-0.9*(2*offset - 2*r)), (r-offset), 0, r*2);
     }
     popMatrix();
     if (displayHitboxes) {

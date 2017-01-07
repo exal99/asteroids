@@ -16,7 +16,7 @@ class Explotion {
     for (Particle p : particles) {
       p.update();
     }
-    timer -= 5;
+    timer -= 10;
   }
 
   void render() {

@@ -5,9 +5,9 @@ ArrayList<Explotion> explotions;
 int numAsteroids = 10;
 boolean displayHitboxes = false;
 int hits = 0;
+int score;
 
 void setup() {
-  //size(800, 600);
   fullScreen();
   ship = new Ship();
   asteroids = new ArrayList<Asteroid>();
@@ -20,7 +20,6 @@ void setup() {
 
 void draw () {
   background(0);
-
   for (Asteroid a : asteroids) {
     a.update();
     a.render();
